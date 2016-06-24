@@ -1,5 +1,6 @@
 var express = require('express');
 var wechat = require('wechat');
+var config = require('./config.js');
 
 var app = express();
 
