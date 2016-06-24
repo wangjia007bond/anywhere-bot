@@ -7,6 +7,7 @@ app.set('port', (process.env.PORT || 5000));
 
 app.use('/wechat', wechat(config, function(req, res, next) {
 	var message = req.weixin;
+	res.reply(message);
 	console.log(message);
 }));
 
