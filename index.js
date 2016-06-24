@@ -5,7 +5,7 @@ var config = require('./config.js');
 
 var app = express();
 
-app.set('port', (80 || process.env.PORT));
+app.set('port', (433 || process.env.PORT));
 
 var checkSignature = function(query, token) {
     var signature = query.signature;
