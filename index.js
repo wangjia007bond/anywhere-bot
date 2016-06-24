@@ -4,9 +4,13 @@ var config = require('./config.js');
 
 var app = express();
 
+app.set('port', (process.env.PORT || 80));
+
 app.use('/', wechat(config, function(req, res, next) {
 	var message = req.weixin;
 	console.log(message);
 }));
 
-app.listen(80);
+app.listen(app.get('port'), function() {
+  console.log('Node app is running on port', app.get('port'));
+});
