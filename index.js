@@ -3,7 +3,6 @@ var wechat = require('wechat');
 var config = require('./config.js');
 
 var app = express();
-
 app.set('port', (80 || process.env.PORT));
 
 app.use('/wechat', wechat(config, function(req, res, next) {
