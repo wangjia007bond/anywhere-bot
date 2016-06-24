@@ -5,7 +5,7 @@ var config = require('./config.js');
 var app = express();
 app.set('port', (process.env.PORT || 5000));
 
-app.use('/wechat', wechat('8dkcsRI2g6xQrduiHLOSlXL3gdcqlwpHqfmDmbcm4Qi', function(req, res, next) {
+app.use('/wechat', wechat('anywherechatbot', function(req, res, next) {
 	var message = req.weixin;
 	console.log(message);
 }));
