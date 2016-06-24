@@ -4,7 +4,7 @@ var config = require('./config.js');
 
 var app = express();
 
-app.use('/wechat', wechat('anywherechatbot', function(req, res, next) {
+app.use('/wechat', wechat(config, function(req, res, next) {
 	var message = req.weixin;
 	console.log(message);
 }));
