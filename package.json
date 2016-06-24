@@ -1,0 +1,20 @@
+{
+  "name": "anywhere-bot",
+  "version": "0.0.1",
+  "description": "Anywhere chatbot for WeChat.",
+  "keywords": [
+    "anywhere",
+    "bot",
+    "wechat"
+  ],
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "repository": "https://github.com/wangjia007bond/anywhere-bot",
+  "author": "Wang Jiahao <wangjia007bond@gmail.com>",
+  "dependencies": {
+    "express": "*",
+    "wechat": "*"
+  }
+}
