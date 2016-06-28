@@ -5,6 +5,28 @@ var Wit = require('node-wit').Wit;
 
 var WIT_TOKEN = conifg.wit-token;
 
+// Wechat API specific code
+
+// See the Send API reference
+// https://developers.facebook.com/docs/messenger-platform/send-api-reference
+var wcReq = request.defaults({
+	uri: 'http://anywhere-chatbot.herokuapp.com/wechat',
+	method: 'POST',
+	json: true,
+	qs: { access_token: anywherechatbot },
+	headers: {'Content-Type': 'application/json'},
+});
+
+var wcMessage = function(recipientId, msg, cb) {
+	var opts = {type: "text", content: msg};
+	wcReq(opts, (err, resp, data) => {
+		if (cb) {
+			cb(err || data.error && data.error.message, data);
+		}
+	});
+};
+
+
 // Wit.ai bot specific code
 
 // This will contain all user sessions.
@@ -70,7 +92,6 @@ var actions = {
 // Setting up our bot
 var wit = new Wit(WIT_TOKEN, actions);
 
-
 var app = express();
 app.set('port', (process.env.PORT || 5000));
 
@@ -82,12 +103,13 @@ app.use('/wechat', wechat(config, function(req, res, next) {
 
     // Yay! We got a new message!
 
-    // We retrieve the Facebook user ID of the sender
-    const sender = messaging.sender.id;
+    // We retrieve the Wechat user ID of the sender
+    var sender = message.FromUserName;
 
     // We retrieve the user's current session, or create one if it doesn't exist
     // This is needed for our bot to figure out the conversation history
-    const sessionId = findOrCreateSession(sender);
+    var sessionId = findOrCreateSession(sender);
+    var msg = message.Content;
 
 	// We received a text message
 
@@ -95,7 +117,7 @@ app.use('/wechat', wechat(config, function(req, res, next) {
 	// This will run all actions until our bot has nothing left to do
 	wit.runActions(
 	sessionId, // the user's current session
-	message, // the user's message 
+	msg, // the user's message 
 	sessions[sessionId].context, // the user's current session state
 	function(error, context) {
 	  if (error) {
