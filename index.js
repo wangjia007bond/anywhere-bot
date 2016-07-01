@@ -48,6 +48,14 @@ const actions = {
 	},
 };
 
+// Setting up our bot
+const wit = new Wit({
+	accessToken: WIT_TOKEN,
+	actions,
+	logger: new log.Logger(log.INFO)
+});
+
+
 var app = express();
 app.set('port', (process.env.PORT || 5000));
 
