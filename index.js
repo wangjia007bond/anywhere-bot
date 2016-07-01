@@ -3,7 +3,6 @@
 var express = require('express');
 var wechat = require('wechat');
 var config = require('./config.js');
-var Wit = require('node-wit').Wit;
 
 let Wit = require('node-wit').Wit;
 let log = require('node-wit').log;
