@@ -3,7 +3,7 @@ var wechat = require('wechat');
 var config = require('./config.js');
 var Wit = require('node-wit').Wit;
 
-var WIT_TOKEN = conifg.wit-token;
+//var WIT_TOKEN = conifg.wit-token;
 
 
 var app = express();
