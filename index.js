@@ -1,9 +1,12 @@
+'use strict';
+
 var express = require('express');
 var wechat = require('wechat');
 var config = require('./config.js');
 var Wit = require('node-wit').Wit;
 
-//var WIT_TOKEN = conifg.wit-token;
+let Wit = require('node-wit').Wit;
+let log = require('node-wit').log;
 
 
 var app = express();
