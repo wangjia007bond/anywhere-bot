@@ -5,26 +5,26 @@ var Wit = require('node-wit').Wit;
 
 var WIT_TOKEN = conifg.wit-token;
 
-// Wechat API specific code
+// // Wechat API specific code
 
-// See the Send API reference
-// https://developers.facebook.com/docs/messenger-platform/send-api-reference
-var wcReq = request.defaults({
-	uri: 'http://anywhere-chatbot.herokuapp.com/wechat',
-	method: 'POST',
-	json: true,
-	qs: { access_token: anywherechatbot },
-	headers: {'Content-Type': 'application/json'},
-});
+// // See the Send API reference
+// // https://developers.facebook.com/docs/messenger-platform/send-api-reference
+// var wcReq = request.defaults({
+// 	uri: 'http://anywhere-chatbot.herokuapp.com/wechat',
+// 	method: 'POST',
+// 	json: true,
+// 	qs: { access_token: anywherechatbot },
+// 	headers: {'Content-Type': 'application/json'},
+// });
 
-var wcMessage = function(recipientId, msg, cb) {
-	var opts = {type: "text", content: msg};
-	wcReq(opts, (err, resp, data) => {
-		if (cb) {
-			cb(err || data.error && data.error.message, data);
-		}
-	});
-};
+// var wcMessage = function(recipientId, msg, cb) {
+// 	var opts = {type: "text", content: msg};
+// 	wcReq(opts, (err, resp, data) => {
+// 		if (cb) {
+// 			cb(err || data.error && data.error.message, data);
+// 		}
+// 	});
+// };
 
 
 // Wit.ai bot specific code
@@ -98,6 +98,8 @@ app.set('port', (process.env.PORT || 5000));
 app.use('/wechat', wechat(config, function(req, res, next) {
 	var message = req.weixin;
 
+	console.log(res);
+	console.log(req);
 	console.log(message);
 	res.reply({type: "text", content: 'Hello world!'});
 
@@ -115,30 +117,30 @@ app.use('/wechat', wechat(config, function(req, res, next) {
 
 	// Let's forward the message to the Wit.ai Bot Engine
 	// This will run all actions until our bot has nothing left to do
-	wit.runActions(
-	sessionId, // the user's current session
-	msg, // the user's message 
-	sessions[sessionId].context, // the user's current session state
-	function(error, context) {
-	  if (error) {
-	    console.log('Oops! Got an error from Wit:', error);
-	  } else {
-	    // Our bot did everything it has to do.
-	    // Now it's waiting for further messages to proceed.
-	    console.log('Waiting for futher messages.');
+	// wit.runActions(
+	// sessionId, // the user's current session
+	// msg, // the user's message 
+	// sessions[sessionId].context, // the user's current session state
+	// function(error, context) {
+	//   if (error) {
+	//     console.log('Oops! Got an error from Wit:', error);
+	//   } else {
+	//     // Our bot did everything it has to do.
+	//     // Now it's waiting for further messages to proceed.
+	//     console.log('Waiting for futher messages.');
 
-	    // Based on the session state, you might want to reset the session.
-	    // This depends heavily on the business logic of your bot.
-	    // Example:
-	    // if (context['done']) {
-	    //   delete sessions[sessionId];
-	    // }
+	//     // Based on the session state, you might want to reset the session.
+	//     // This depends heavily on the business logic of your bot.
+	//     // Example:
+	//     // if (context['done']) {
+	//     //   delete sessions[sessionId];
+	//     // }
 
-	    // Updating the user's current session state
-	    sessions[sessionId].context = context;
-	  }
-	}
-	);
+	//     // Updating the user's current session state
+	//     sessions[sessionId].context = context;
+	//   }
+	// }
+	// );
 }));
 
 app.listen(app.get('port'), function() {
