@@ -66,6 +66,16 @@ app.use('/wechat', wechat(config, function(req, res, next) {
 	console.log('WIT_TOKEN:' + WIT_TOKEN);
 	console.log(message.Content);
 	res.reply({type: "text", content: 'Hello world!'});
+
+	// Yay! We got a new message!
+	// We retrieve the Wechat user ID of the sender
+	const sender = message.FromUserName;
+
+	// We retrieve the user's current session, or create one if it doesn't exist
+	// This is needed for our bot to figure out the conversation history
+	const sessionId = findOrCreateSession(sender);
+
+	const text = message.Content;
 }));
 
 app.listen(app.get('port'), function() {
