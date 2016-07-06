@@ -46,10 +46,13 @@ app.use('/wechat', wechat(config, function(req, res, next) {
 
 	res.reply({type: "text", content: 'Hello world!'});
 
-	console.log('req');
-	console.log(req);
-	console.log('res');
-	console.log(res);
+	if(message === '1') {
+		console.log('req');
+		console.log(req);		
+	} else {
+		console.log('res');
+		console.log(res);		
+	}
 
 	// Yay! We got a new message!
 	// We retrieve the Wechat user ID of the sender
