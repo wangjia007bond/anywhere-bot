@@ -44,9 +44,12 @@ app.set('port', (process.env.PORT || 5000));
 app.use('/wechat', wechat(config, function(req, res, next) {
 	var message = req.weixin;
 
-	console.log('WIT_TOKEN:' + WIT_TOKEN);
-	console.log('message Content:' + message.Content);
 	res.reply({type: "text", content: 'Hello world!'});
+
+	console.log('req');
+	console.log(req);
+	console.log('res');
+	console.log(res);
 
 	// Yay! We got a new message!
 	// We retrieve the Wechat user ID of the sender
