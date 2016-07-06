@@ -15,7 +15,7 @@
   "author": "Wang Jiahao <wangjia007bond@gmail.com>",
   "dependencies": {
     "express": "*",
-    "node-wit": "*",
+    "node-wit": "3.3.2",
     "wechat": "*"
   }
 }
