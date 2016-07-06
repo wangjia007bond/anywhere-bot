@@ -18,6 +18,9 @@
   "repository": "https://github.com/wit-ai/node-wit",
   "author": "Julien Odent <julien@wit.ai>",
   "dependencies": {
+    "request": "*",
+    "express": "*",
+    "body-parser": "*",
     "node-fetch": "^1.5.1",
     "node-uuid": "^1.4.7"
   }
