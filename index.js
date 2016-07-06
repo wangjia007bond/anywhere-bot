@@ -44,7 +44,6 @@ app.set('port', (process.env.PORT || 5000));
 app.use('/wechat', wechat(config, function(req, res, next) {
 	var message = req.weixin;
 
-	res.reply({type: "text", content: 'Hello world!'});
 
 	if(message === '1') {
 		console.log('req');
@@ -64,6 +63,7 @@ app.use('/wechat', wechat(config, function(req, res, next) {
 
 	const text = message.Content;
 
+	res.reply({type: "text", content: 'success'});
 }));
 
 app.listen(app.get('port'), function() {
