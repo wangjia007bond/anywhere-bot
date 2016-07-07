@@ -24,19 +24,31 @@ const Wit = require('./lib/wit.js').Wit
 // Webserver parameter
 const PORT = process.env.PORT || 8445;
 
+console.log("port:" + PORT);
+
 // Wit.ai parameters
 const WIT_TOKEN = process.env.WIT_TOKEN;
+
+console.log("wit token:" + WIT_TOKEN);
 
 // Messenger API parameters
 const FB_PAGE_ID = process.env.FB_PAGE_ID;
 if (!FB_PAGE_ID) {
   throw new Error('missing FB_PAGE_ID');
 }
+
+console.log("fb page id:" + FB_PAGE_ID);
+
 const FB_PAGE_TOKEN = process.env.FB_PAGE_TOKEN;
 if (!FB_PAGE_TOKEN) {
   throw new Error('missing FB_PAGE_TOKEN');
 }
+
+console.log("fb page token:" + FB_PAGE_TOKEN); 
+
 const FB_VERIFY_TOKEN = process.env.FB_VERIFY_TOKEN;
+
+console.log("fb verify token:" + FB_VERIFY_TOKEN);
 
 // Messenger API specific code
 
@@ -173,6 +185,8 @@ app.get('/fb', (req, res) => {
 app.post('/fb', (req, res) => {
   // Parsing the Messenger API response
   const messaging = getFirstMessagingEntry(req.body);
+
+  console.log("message" + messaging.message.text);
   if (messaging && messaging.message && messaging.recipient.id === FB_PAGE_ID) {
     // Yay! We got a new message!
 
@@ -196,6 +210,8 @@ app.post('/fb', (req, res) => {
         'Sorry I can only process text messages for now.'
       );
     } else if (msg) {
+
+      console.log("run action");
       // We received a text message
 
       // Let's forward the message to the Wit.ai Bot Engine
