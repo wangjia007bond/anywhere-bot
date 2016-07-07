@@ -33,16 +33,10 @@ console.log("wit token:" + WIT_TOKEN);
 
 // Messenger API parameters
 const FB_PAGE_ID = process.env.FB_PAGE_ID;
-if (!FB_PAGE_ID) {
-  throw new Error('missing FB_PAGE_ID');
-}
 
 console.log("fb page id:" + FB_PAGE_ID);
 
 const FB_PAGE_TOKEN = process.env.FB_PAGE_TOKEN;
-if (!FB_PAGE_TOKEN) {
-  throw new Error('missing FB_PAGE_TOKEN');
-}
 
 console.log("fb page token:" + FB_PAGE_TOKEN); 
 
@@ -183,42 +177,34 @@ app.get('/fb', (req, res) => {
 
 // Message handler
 app.post('/fb', (req, res) => {
-  // Parsing the Messenger API response
-  const messaging = getFirstMessagingEntry(req.body);
+  // Parse the Messenger payload
+  // See the Webhook reference
+  // https://developers.facebook.com/docs/messenger-platform/webhook-reference
+  const data = req.body;
 
-  console.log("message" + messaging.message.text);
-  if (messaging && messaging.message && messaging.recipient.id === FB_PAGE_ID) {
-    // Yay! We got a new message!
+  if (data.object === 'page') {
+    data.entry.forEach(entry => {
+      entry.messaging.forEach(event => {
+        if (event.message) {
+          // Yay! We got a new message!
+          // We retrieve the Facebook user ID of the sender
+          const sender = event.sender.id;
 
-    // We retrieve the Facebook user ID of the sender
-    const sender = messaging.sender.id;
+          // We retrieve the user's current session, or create one if it doesn't exist
+          // This is needed for our bot to figure out the conversation history
+          const sessionId = findOrCreateSession(sender);
 
-    // We retrieve the user's current session, or create one if it doesn't exist
-    // This is needed for our bot to figure out the conversation history
-    const sessionId = findOrCreateSession(sender);
+          // We retrieve the message content
+          const text = event.message.text;
 
-    // We retrieve the message content
-    const msg = messaging.message.text;
-    const atts = messaging.message.attachments;
-
-    if (atts) {
-      // We received an attachment
-
-      // Let's reply with an automatic message
-      fbMessage(
-        sender,
-        'Sorry I can only process text messages for now.'
-      );
-    } else if (msg) {
-
-      console.log("run action");
+          if (text) {
       // We received a text message
 
       // Let's forward the message to the Wit.ai Bot Engine
       // This will run all actions until our bot has nothing left to do
       wit.runActions(
         sessionId, // the user's current session
-        msg, // the user's message 
+        text, // the user's message 
         sessions[sessionId].context, // the user's current session state
         (error, context) => {
           if (error) {
@@ -240,8 +226,13 @@ app.post('/fb', (req, res) => {
           }
         }
       );
-    }
-  }
+          }
+        } else {
+          console.log('received event', JSON.stringify(event));
+        }
+      });
+    });
+  }  
   res.sendStatus(200);
 });
 
