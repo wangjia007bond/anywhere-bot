@@ -1,27 +1,20 @@
 {
-  "name": "node-wit",
-  "version": "3.3.2",
-  "description": "Wit.ai Node.js SDK",
+  "name": "anywhere-bot",
+  "version": "0.0.1",
+  "description": "Anywhere chatbot for WeChat.",
   "keywords": [
-    "wit",
-    "wit.ai",
+    "anywhere",
     "bot",
-    "botengine",
-    "bots",
-    "nlp",
-    "automation"
+    "wechat"
   ],
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node index.js"
   },
-  "repository": "https://github.com/wit-ai/node-wit",
-  "author": "Julien Odent <julien@wit.ai>",
+  "repository": "https://github.com/wangjia007bond/anywhere-bot",
+  "author": "Wang Jiahao <wangjia007bond@gmail.com>",
   "dependencies": {
-    "request": "*",
     "express": "*",
-    "body-parser": "*",
-    "node-fetch": "^1.5.1",
-    "node-uuid": "^1.4.7"
+    "wechat": "*"
   }
 }
